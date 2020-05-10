@@ -13,17 +13,31 @@ public class Company {
 		this.sharePrice = sharePrice;
 	}
 	
-	public void updateShareNumber(int shares) {
-		this.shares = shares;
+	public void update() {
+		// sells one stock and adds 1 to sales count
+		updateShareNumber();
+		updateSoldShares();
+		//checks if company sold 10 stock and then doubles price
+		if(soldShares % 10 == 0) {
+			doublePrice();			
+		}
 	}
-	public void updateSharePrice(double sharePrice) {
-		this.sharePrice = sharePrice;
+	// subtracts 1 from total numbers of shares available
+	public void updateShareNumber() {
+		this.shares =- shares;
+	}
+	// doubles stock price
+	public void doublePrice() {
+		this.sharePrice = sharePrice * 2;
+	}
+	// decrease stock price by 2%
+	public void shareDiscount() {
+		this.sharePrice = sharePrice * 1.02;
 	}
 	// updates number of sold shares
 	public void updateSoldShares() {
 		 this.soldShares++;
 	}
-	
 	// getters
 	public int getSoldShares() {
 		return soldShares;

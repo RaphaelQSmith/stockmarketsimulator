@@ -9,7 +9,7 @@ public class StockMarket {
 	private List<Company> companyList = new ArrayList<>();
 	private List<Investor> investorList = new ArrayList<>();
 	
-	private int totalShares;
+	private int totalSales;
 	private Company higher, lower;
 	private Investor richer, poorest;
 	
@@ -35,11 +35,24 @@ public class StockMarket {
 		}
 	}
 	
+	public void updateMarket(List<Company> comp, List<Investor> inv) {
+		for(Investor investor : inv) {
+			if(totalSales % 10 == 0) {
+				for(Company c : comp) {
+					if(c.getSoldShares()==0) {
+						c.shareDiscount();
+					}
+				}
+			}
+			investor.buyStock(comp);
+		}
+	}
+		
 	public int getTotalShares() {
-		return totalShares;
+		return totalSales;
 	}
 	public void setTotalShares(int totalShares) {
-		this.totalShares = totalShares;
+		this.totalSales = totalShares;
 	}
 	public Company getHigher() {
 		return higher;
