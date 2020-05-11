@@ -33,6 +33,7 @@ public class StockMarket {
 			Investor inv = new Investor(invID, investBudget);
 			investorList.add(inv);
 		}
+		updateMarket(companyList, investorList);
 	}
 	
 	public void updateMarket(List<Company> comp, List<Investor> inv) {
@@ -45,10 +46,33 @@ public class StockMarket {
 				}
 			}
 			investor.buyStock(comp);
+			totalSales++;
+		}
+		checkRemainder();
+	}
+	
+	public void checkRemainder() {
+		int count = 0;
+		while(companyList.size()>count) {
+			if(companyList.get(count).getShares() > 0) {
+				updateMarket(companyList, investorList);
+			}else {
+				count++;
+			}
 		}
 	}
-		
-	public int getTotalShares() {
+	
+	public void checkBudget() {
+		int count = 0;
+		while(investorList.size()>count) {
+			if(investorList.get(count).getBudget() > 0) {
+				updateMarket(companyList, investorList);
+			}else {
+				count++;
+			}	
+		}
+	}
+	public int getTotalSales() {
 		return totalSales;
 	}
 	public void setTotalShares(int totalShares) {

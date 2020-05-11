@@ -14,8 +14,9 @@ public class Investor {
 	
 	public void buyStock(List<Company> comp) {
 		for(Company c : comp) {
-			if(c.getShares()>0) {
+			if(c.getShares()>0 && c.getSharePrice()<budget) {
 				c.update();
+				break;
 			}
 		}
 	}
