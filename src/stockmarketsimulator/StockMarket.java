@@ -5,7 +5,6 @@ import java.util.*;
 
 public class StockMarket {
 	
-	private Map<Integer, Double> stocks = new HashMap<>();
 	private List<Company> companyList = new ArrayList<>();
 	private List<Investor> investorList = new ArrayList<>();
 	
@@ -34,37 +33,51 @@ public class StockMarket {
 			investorList.add(inv);
 			invID++;
 		}
-		updateMarket(companyList, investorList);
+		updateMarket();
 	}
 	
-	public void updateMarket(List<Company> comp, List<Investor> inv) {
+	public void updateMarket() {
 		// if company didn't sell any stock in a 10-sale cycle price will drop 2%
-		while(checkRemainder() == true){
-			for(Investor investor : inv) {
+		while(keepGoing() == true){
+			for(int i=0; i<investorList.size();i++) {
 				if(totalSales % 10 == 0 && totalSales !=0) {
-					for(Company c : comp) {
-						if(c.getSoldShares()==0) {
-							c.shareDiscount();
+					for(int j=0; j<companyList.size();j++) {
+						if(companyList.get(j).getSoldShares()==0) {
+							companyList.get(j).shareDiscount();
 						}
 					}
 				}
-				investor.buyStock(comp);
+				companyList = investorList.get(i).buyStock(companyList);
 			}
 		};
 	}
-	
-	public boolean checkRemainder() {
-		int count = 0;
-		while(companyList.size() > count) {
-			if(companyList.get(count).getShares() > 0) {
-				return true;
-			}else {
-				count++;
+
+	public boolean keepGoing() {
+		List<Double> sorted = new ArrayList<>();		
+		for(int i = 0; i<investorList.size();i++) {
+			sorted.add(investorList.get(i).getBudget());
+		}
+		double max = Collections.max(sorted);
+
+		List<Double> sortedPrice = new ArrayList<>();
+		
+		for(int j = 0; j<companyList.size(); j++) {
+			if(companyList.get(j).getShares() > 0) {
+			sortedPrice.add(companyList.get(j).getSharePrice());
 			}
 		}
-		return false;
+		double min = Collections.min(sortedPrice);
+		
+		if(min <= max) {
+			System.out.println("TRUE TRUE TRUE TRUE");
+			return true;
+		}else {
+			System.out.println("FALSE FALSE FALSE FALSE");
+			return false;
+		}
 	}
-
+	
+	
 	
 	public int getTotalSales() {
 		return totalSales;
@@ -84,9 +97,7 @@ public class StockMarket {
 	public void setLower(Company lower) {
 		this.lower = lower;
 	}
-	public Investor getRicher() {
-		return richer;
-	}
+	
 	public void setRicher(Investor richer) {
 		this.richer = richer;
 	}

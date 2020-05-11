@@ -15,12 +15,10 @@ public class Company {
 	
 	public void update() {
 		// sells one stock and adds 1 to sales count
-		updateShareNumber();
-		updateSoldShares();
-		StockMarket.setTotalSales();
+		
 		//checks if company sold 10 stock and then doubles price
 		if(soldShares % 10 == 0 || soldShares != 0) {
-			doublePrice();			
+			doublePrice();			 	
 		}
 	}
 	// subtracts 1 from total numbers of shares available

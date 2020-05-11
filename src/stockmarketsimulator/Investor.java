@@ -6,23 +6,24 @@ public class Investor {
 
 	int investorID;
 	double budget;
-	int counter = 0;
 	
 	public Investor(int investorID, double budget) {
 		this.investorID = investorID;
 		this.budget = budget;
 	}
 	
-	public void buyStock(List<Company> comp) {
-		for(Company c : comp) {
-			if(c.getShares() > 0 && c.getSharePrice() < budget) {
-				// update company values
-				this.counter++;
-				System.out.println(budget);
-				this.budget =- c.getSharePrice();
-				c.update();
+	public List<Company> buyStock(List<Company> comp) {
+		
+		for(int i=0; i<comp.size();i++) {
+			if(comp.get(i).getShares() > 0 && comp.get(i).getSharePrice() <= this.budget) {
+				System.out.println(investorID);
+				this.budget = this.budget - comp.get(i).getSharePrice();
+				comp.get(i).updateShareNumber();
+				comp.get(i).updateSoldShares();
+				StockMarket.setTotalSales();
 			}
 		}
+		return comp;
 	}
 	
 	public void updateBudget(double stockPrice) {
