@@ -9,7 +9,7 @@ public class StockMarket {
 	private List<Company> companyList = new ArrayList<>();
 	private List<Investor> investorList = new ArrayList<>();
 	
-	private int totalSales;
+	private static int totalSales;
 	private Company higher, lower;
 	private Investor richer, poorest;
 	
@@ -32,51 +32,45 @@ public class StockMarket {
 			int investBudget = r.nextInt((10000 - 1000) + 1 ) + 1000;
 			Investor inv = new Investor(invID, investBudget);
 			investorList.add(inv);
+			invID++;
 		}
 		updateMarket(companyList, investorList);
 	}
 	
 	public void updateMarket(List<Company> comp, List<Investor> inv) {
-		for(Investor investor : inv) {
-			if(totalSales % 10 == 0) {
-				for(Company c : comp) {
-					if(c.getSoldShares()==0) {
-						c.shareDiscount();
+		// if company didn't sell any stock in a 10-sale cycle price will drop 2%
+		while(checkRemainder() == true){
+			for(Investor investor : inv) {
+				if(totalSales % 10 == 0 && totalSales !=0) {
+					for(Company c : comp) {
+						if(c.getSoldShares()==0) {
+							c.shareDiscount();
+						}
 					}
 				}
+				investor.buyStock(comp);
 			}
-			investor.buyStock(comp);
-			totalSales++;
-		}
-		checkRemainder();
+		};
 	}
 	
-	public void checkRemainder() {
+	public boolean checkRemainder() {
 		int count = 0;
-		while(companyList.size()>count) {
+		while(companyList.size() > count) {
 			if(companyList.get(count).getShares() > 0) {
-				updateMarket(companyList, investorList);
+				return true;
 			}else {
 				count++;
 			}
 		}
+		return false;
 	}
+
 	
-	public void checkBudget() {
-		int count = 0;
-		while(investorList.size()>count) {
-			if(investorList.get(count).getBudget() > 0) {
-				updateMarket(companyList, investorList);
-			}else {
-				count++;
-			}	
-		}
-	}
 	public int getTotalSales() {
 		return totalSales;
 	}
-	public void setTotalShares(int totalShares) {
-		this.totalSales = totalShares;
+	public static void setTotalSales() {
+		totalSales++;
 	}
 	public Company getHigher() {
 		return higher;
