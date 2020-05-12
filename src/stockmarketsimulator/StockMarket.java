@@ -1,16 +1,14 @@
 package stockmarketsimulator;
 
 import java.util.Random;
-import java.util.*;  
+import java.util.*;
+import java.util.Map.Entry;  
 
 public class StockMarket {
 	
 	private List<Company> companyList = new ArrayList<>();
 	private List<Investor> investorList = new ArrayList<>();
-	
 	private static int totalSales;
-	private Company higher, lower;
-	private Investor richer, poorest;
 	
 	public StockMarket(){
 		int companyID = 1;
@@ -69,10 +67,8 @@ public class StockMarket {
 		double min = Collections.min(sortedPrice);
 		
 		if(min <= max) {
-			System.out.println("TRUE TRUE TRUE TRUE");
 			return true;
 		}else {
-			System.out.println("FALSE FALSE FALSE FALSE");
 			return false;
 		}
 	}
@@ -85,28 +81,62 @@ public class StockMarket {
 	public static void setTotalSales() {
 		totalSales++;
 	}
-	public Company getHigher() {
-		return higher;
+	// get largest and smallest capital
+	public void  lowestOrHighest(int a) {
+		HashMap<Integer, Double> priceList = new HashMap<Integer, Double>();
+		
+		for(Company c: companyList) {
+			priceList.put(c.getCompanyID(), (c.getSharePrice() * c.getShares()));
+		}
+		double maxValue = (Collections.max(priceList.values()));
+		double minValue = (Collections.min(priceList.values()));
+		// if input is 1 returns highest, if 2 returns lowest	
+		if(a==1){
+				System.out.println("Highest capital: " + maxValue);
+				System.out.println("Companies with highest capital: ");
+		
+				for(Entry<Integer, Double> entry : priceList.entrySet()) {
+				if(entry.getValue()==maxValue) {
+				System.out.println("ID " + entry.getKey());
+				}
+			}		
+		}else if(a==2) {
+			System.out.println("Lowest capital: " + minValue);
+			System.out.println("Companies with lowest capital: ");
+			for(Entry<Integer, Double> entry : priceList.entrySet()) {
+				if(entry.getValue()==minValue) {
+				System.out.println("ID " + entry.getKey());
+				}
+			}	
+		}
+		
 	}
-	public void setHigher(Company higher) {
-		this.higher = higher;
+	//	get richer and poorest
+	public void  richestOrPoorest(int a) {
+		HashMap<Integer, Integer> shareholderList = new HashMap<Integer, Integer>();
+		
+		for(Investor inv: investorList) {
+			shareholderList.put(inv.getInvestorID(), inv.getShares());
+		}
+		double maxValue = (Collections.max(shareholderList.values()));
+		double minValue = (Collections.min(shareholderList.values()));
+		
+		if(a==1) {
+			System.out.println("Highest share count: " + maxValue);
+			System.out.println("Investor with highest share count: ");
+			for(Entry<Integer, Integer> entry : shareholderList.entrySet()) {
+					if(entry.getValue()==maxValue) {
+					System.out.println("ID " + entry.getKey());
+					}
+				}
+		}else if(a==2) {
+			System.out.println("Lowest share count: " + minValue);
+			System.out.println("Investor with lowest share count: ");
+			for(Entry<Integer, Integer> entry : shareholderList.entrySet()) {
+					if(entry.getValue()==minValue) {
+					System.out.println("ID " + entry.getKey());
+					}
+				}
+		}
 	}
-	public Company getLower() {
-		return lower;
-	}
-	public void setLower(Company lower) {
-		this.lower = lower;
-	}
-	
-	public void setRicher(Investor richer) {
-		this.richer = richer;
-	}
-	public Investor getPoorest() {
-		return poorest;
-	}
-	public void setPoorest(Investor poorest) {
-		this.poorest = poorest;
-	}
-	
-	
 }

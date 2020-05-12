@@ -1,6 +1,6 @@
 package stockmarketsimulator;
 
-public class Company {
+public class Company implements CompanyInterface {
 
 	private int companyID;
 	private int shares;
@@ -13,8 +13,8 @@ public class Company {
 		this.sharePrice = sharePrice;
 	}
 	
+	@Override
 	public void update() {
-		// sells one stock and adds 1 to sales count
 		
 		//checks if company sold 10 stock and then doubles price
 		if(soldShares % 10 == 0 || soldShares != 0) {
@@ -22,18 +22,22 @@ public class Company {
 		}
 	}
 	// subtracts 1 from total numbers of shares available
+	@Override
 	public void updateShareNumber() {
 		this.shares--;
 	}
 	// doubles stock price
+	@Override
 	public void doublePrice() {
 		this.sharePrice = sharePrice * 2;
 	}
 	// decrease stock price by 2%
+	@Override
 	public void shareDiscount() {
 		this.sharePrice = sharePrice * 1.02;
 	}
 	// updates number of sold shares
+	@Override
 	public void updateSoldShares() {
 		 this.soldShares++;
 	}
