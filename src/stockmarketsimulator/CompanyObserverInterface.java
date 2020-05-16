@@ -1,7 +1,8 @@
 package stockmarketsimulator;
 
-public interface CompanyInterface {
-
+public interface CompanyObserverInterface {
+	
+	//	update company variables accordingly as soon as notified by the StockMarket
 	void update();
 
 	// subtracts 1 from total numbers of shares available

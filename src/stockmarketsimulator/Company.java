@@ -1,6 +1,6 @@
 package stockmarketsimulator;
 
-public class Company implements CompanyInterface {
+public class Company implements CompanyObserverInterface {
 
 	private int companyID;
 	private int shares;
@@ -12,10 +12,8 @@ public class Company implements CompanyInterface {
 		this.shares = shares;
 		this.sharePrice = sharePrice;
 	}
-	
 	@Override
 	public void update() {
-		
 		//checks if company sold 10 stock and then doubles price
 		if(soldShares % 10 == 0 || soldShares != 0) {
 			doublePrice();			 	
@@ -41,6 +39,7 @@ public class Company implements CompanyInterface {
 	public void updateSoldShares() {
 		 this.soldShares++;
 	}
+	
 	// getters
 	public int getSoldShares() {
 		return soldShares;
