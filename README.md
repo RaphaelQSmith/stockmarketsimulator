@@ -1,7 +1,6 @@
 # stockmarketsimulator
 
 This project is part of CCT's Third-year Object-Oriented Design Patterns.
-Lecturer - Amilcar Aponte
 
 Design Patterns used on the project:
 
